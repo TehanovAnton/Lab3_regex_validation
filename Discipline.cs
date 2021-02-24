@@ -80,7 +80,7 @@ namespace OOP_SEM3_L2
         public bool EnterOnlyDigit(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (Char.IsDigit(number))
+            if (Char.IsDigit(number) || Char.IsControl(number))
                 return e.Handled = false;
             else
                 return e.Handled = true;

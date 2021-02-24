@@ -98,7 +98,6 @@ namespace OOP_SEM3_L2
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
@@ -127,7 +126,7 @@ namespace OOP_SEM3_L2
             this.ByCours,
             this.BySemestr});
             this.Поиск.Name = "Поиск";
-            this.Поиск.Size = new System.Drawing.Size(240, 34);
+            this.Поиск.Size = new System.Drawing.Size(270, 34);
             this.Поиск.Text = "Поиск";
             // 
             // ByLector
@@ -135,15 +134,14 @@ namespace OOP_SEM3_L2
             this.ByLector.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FindedLector});
             this.ByLector.Name = "ByLector";
-            this.ByLector.Size = new System.Drawing.Size(214, 34);
+            this.ByLector.Size = new System.Drawing.Size(270, 34);
             this.ByLector.Text = "по лектору";
             // 
             // FindedLector
             // 
-            this.FindedLector.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FindedLector.Name = "FindedLector";
             this.FindedLector.Size = new System.Drawing.Size(100, 31);
-            this.FindedLector.Enter += new System.EventHandler(this.FindedLector_Enter);
+            this.FindedLector.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FindedLector_KeyPress);
             this.FindedLector.DoubleClick += new System.EventHandler(this.FindedLector_DoubleClick);
             // 
             // ByCours
@@ -151,12 +149,11 @@ namespace OOP_SEM3_L2
             this.ByCours.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FindedCours});
             this.ByCours.Name = "ByCours";
-            this.ByCours.Size = new System.Drawing.Size(214, 34);
+            this.ByCours.Size = new System.Drawing.Size(270, 34);
             this.ByCours.Text = "по курсу";
             // 
             // FindedCours
             // 
-            this.FindedCours.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FindedCours.Name = "FindedCours";
             this.FindedCours.Size = new System.Drawing.Size(100, 31);
             this.FindedCours.DoubleClick += new System.EventHandler(this.FindedCours_DoubleClick);
@@ -166,12 +163,11 @@ namespace OOP_SEM3_L2
             this.BySemestr.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FindedSem});
             this.BySemestr.Name = "BySemestr";
-            this.BySemestr.Size = new System.Drawing.Size(214, 34);
+            this.BySemestr.Size = new System.Drawing.Size(270, 34);
             this.BySemestr.Text = "по семестру";
             // 
             // FindedSem
             // 
-            this.FindedSem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.FindedSem.Name = "FindedSem";
             this.FindedSem.Size = new System.Drawing.Size(100, 31);
             this.FindedSem.DoubleClick += new System.EventHandler(this.FindedSem_DoubleClick);
@@ -182,7 +178,7 @@ namespace OOP_SEM3_L2
             this.ByCourse,
             this.ByControlType});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(240, 34);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(270, 34);
             this.toolStripMenuItem3.Text = "Сортировка по";
             // 
             // ByCourse
@@ -202,13 +198,13 @@ namespace OOP_SEM3_L2
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(240, 34);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(270, 34);
             this.toolStripMenuItem4.Text = "Сохранить";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(240, 34);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(270, 34);
             this.toolStripMenuItem5.Text = "О программе";
             // 
             // OutFindInf

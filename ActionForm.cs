@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using OOP_4SEM_3;
@@ -59,77 +59,40 @@ namespace OOP_SEM3_L2
             }
         }
 
-        private void FindedLector_Enter(object sender, EventArgs e)
-        {
-            //string strFindedLector = FindedLector.Text;
-            //int Lenth = discplineList.Count;
-            //for (int i = 0; i < Lenth; i++)
-            //{
-            //    if (discplineList[i].lecturer.NameLec == strFindedLector)
-            //    {
-            //        OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.NameLec + "\r\n" +
-            //            "Каьинет-" + discplineList[i].lecturer.office + "\r\n" +
-            //            "Каыкдра-" + discplineList[i].lecturer.departament;
-            //    }
-            //    else
-            //        OutFindInf.Text = "Нет результатов поиска";
-            //}
-        }
-
         private void FindedLector_DoubleClick(object sender, EventArgs e)
         {
-            string strFindedLector = FindedLector.Text;
-            int Lenth = discplineList.Count;
             OutFindInf.Text = "";
-            for (int i = 0; i < Lenth; i++)
+            foreach (var el in from n in discplineList where n.lecturer.nameLecturer == FindedLector.Text select n.lecturer)
             {
-                if (discplineList[i].lecturer.nameLecturer.ToString() == strFindedLector)
-                {
-                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.nameLecturer + "\r\n" +
-                        "Каьинет-" + discplineList[i].lecturer.office + "\r\n" +
-                        "Каыкдра-" + discplineList[i].lecturer.departament +
-                        "----------" + "\r\n";
-                }
-                else
-                    OutFindInf.Text = "Нет результатов поиска";
+                OutFindInf.Text += "Имя лектора-" + el.nameLecturer + "\r\n" +
+                    "Кабинет-" + el.office + "\r\n" +
+                    "Кафедра-" + el.departament +
+                    "----------" + "\r\n";
             }
             FindedLector.Text = "";
         }
 
         private void FindedCours_DoubleClick(object sender, EventArgs e)
         {
-            string strFindedCourse = FindedCours.Text;
-            int Lenth = discplineList.Count;
+            
             OutFindInf.Text = "";
-            for (int i = 0; i < Lenth; i++)
+            foreach (var el in from n in discplineList where n.course.ToString() == FindedCours.Text select n.lecturer)
             {
-                if (discplineList[i].semester.ToString() == strFindedCourse)
-                {
-                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.nameLecturer + "\r\n" +
-                        "Название дисциплины-" + discplineList[i].name + "\r\n" +
+                OutFindInf.Text += "Имя лектора-" + el.nameLecturer + "\r\n" +
+                        "Название дисциплины-" + el.nameLecturer + "\r\n" +
                         "----------" + "\r\n";
-                }
-                else
-                    OutFindInf.Text = "Нет результатов поиска";
             }
             FindedCours.Text = "";
         }
 
         private void FindedSem_DoubleClick(object sender, EventArgs e)
         {
-            string strFindedCourse = FindedSem.Text;
-            int Lenth = discplineList.Count;
             OutFindInf.Text = "";
-            for (int i = 0; i < Lenth; i++)
+            foreach (var el in from n in discplineList where n.semester.ToString() == FindedSem.Text select n.lecturer)
             {
-                if (discplineList[i].course.ToString() == strFindedCourse)
-                {
-                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.nameLecturer + "\r\n" +
-                        "Название дисциплины-" + discplineList[i].name + "\r\n" +
+                OutFindInf.Text += "Имя лектора-" + el.nameLecturer + "\r\n" +
+                        "Название дисциплины-" + el.nameLecturer + "\r\n" +
                         "----------" + "\r\n";
-                }
-                else
-                    OutFindInf.Text = "Нет результатов поиска";
             }
             FindedSem.Text = "";
         }
@@ -138,42 +101,40 @@ namespace OOP_SEM3_L2
         {
             for (int j = 0; j < Lenth; j++)
             {
-                OutFindInf.Text += Convert.ToString("Название дисциплины: " + discplineList[j].name + "\r\n");
-                OutFindInf.Text += Convert.ToString("Специальность: " + discplineList[j].specialty + "\r\n");
-                OutFindInf.Text += Convert.ToString("Курс: " + discplineList[j].course + "\r\n");
-                OutFindInf.Text += Convert.ToString("Семестр: " + discplineList[j].semester + "\r\n");
-                OutFindInf.Text += Convert.ToString("Тип контроля: " + discplineList[j].controlType + "\r\n");
-                OutFindInf.Text += Convert.ToString("Количество лаб: " + discplineList[j].numLab + "\r\n");
-                OutFindInf.Text += Convert.ToString("Количество лекций: " + discplineList[j].numLectures + "\r\n");
-                OutFindInf.Text += Convert.ToString("Имя лектора: " + discplineList[j].lecturer.nameLecturer + "\r\n");
-                OutFindInf.Text += Convert.ToString("Кафедра: " + discplineList[j].lecturer.departament + "\r\n");
-                OutFindInf.Text += Convert.ToString("кабинет: " + discplineList[j].lecturer.office + "\r\n");
-                OutFindInf.Text += "-------------------------" + "\r\n";
+                DisciplineInfo el = discplineList[j];
+                OutFindInf.Text += "Название дисциплины: " + el.name + "\r\n" +
+                "Специальность: " + el.specialty + "\r\n" +
+                "Курс: " + el.course + "\r\n" +
+                "Семестр: " + el.semester + "\r\n" +
+                "Тип контроля: " + el.controlType + "\r\n" +
+                "Количество лаб: " + el.numLab + "\r\n" +
+                "Количество лекций: " + el.numLectures + "\r\n" +
+                "Имя лектора: " + el.lecturer.nameLecturer + "\r\n" +
+                "Кафедра: " + el.lecturer.departament + "\r\n" +
+                "кабинет: " + el.lecturer.office + "\r\n" +
+                "-------------------------" + "\r\n";
             }
         }
         private void ByCourse_Click(object sender, EventArgs e)
         {
             OutFindInf.Text = "";
-            int Lenth = discplineList.Count;
-            OOP_4SEM_3.SortinByCourse arg = new OOP_4SEM_3.SortinByCourse();
-            discplineList.Sort((IComparer<DisciplineInfo>)arg);
-            outDisciplineFields(Lenth);
+            SortinByCourse arg = new SortinByCourse();
+            discplineList.Sort(arg);
+            outDisciplineFields(discplineList.Count);
         }
 
         private void ByControlType_Click(object sender, EventArgs e)
         {
             OutFindInf.Text = "";
-            int Lenth = discplineList.Count;
-            OOP_4SEM_3.SortingByControlType arg = new OOP_4SEM_3.SortingByControlType();
-            discplineList.Sort((IComparer<DisciplineInfo>)arg);
-            outDisciplineFields(Lenth);
+            SortingByControlType arg = new SortingByControlType();
+            discplineList.Sort(arg);
+            outDisciplineFields(discplineList.Count);
         }
 
         private void SaveAs_Click(object sender, EventArgs e)
         {
             SaveAs newForm = new SaveAs();
             newForm.Show();
-
         }
 
         private void Alldiscipline_Click(object sender, EventArgs e)
@@ -184,6 +145,20 @@ namespace OOP_SEM3_L2
                 ListDiscipline.Items.Add(discplineList[i].name);
             }
             File.WriteAllText("user.json", JsonConvert.SerializeObject(discplineList));
+        }
+
+        private void FindedLector_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            OutFindInf.Text = "";
+            Regex regex = new Regex($@"^{e.KeyChar}\w+");
+            foreach (var el in from n in discplineList where regex.IsMatch(n.lecturer.nameLecturer) select n.lecturer)
+            {
+                OutFindInf.Text += "Имя лектора-" + el.nameLecturer + "\r\n" +
+                    "Кабинет-" + el.office + "\r\n" +
+                    "Кафедра-" + el.departament +
+                    "----------" + "\r\n";
+            }
+            OutFindInf.Text += ".";
         }
     }
 
