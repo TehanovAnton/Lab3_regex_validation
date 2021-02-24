@@ -14,7 +14,6 @@ namespace OOP_SEM3_L2
     public partial class DisLecturer : Form
     {
         public ActionForm actionForm;
-        public int lastElement;
 
         public DisLecturer()
         {
@@ -24,7 +23,6 @@ namespace OOP_SEM3_L2
         public DisLecturer(ActionForm actionForm)
         {
             InitializeComponent();
-            lastElement = actionForm.discplineList.Count - 1;
             this.actionForm = actionForm;
         }
 
@@ -35,10 +33,12 @@ namespace OOP_SEM3_L2
 
         private void OK_Click(object sender, EventArgs e)
         {
-            lastElement = actionForm.discplineList.Count - 1;
-            actionForm.discplineList[lastElement].lecturer.departament = Departsment.Text;
-            actionForm.discplineList[lastElement].lecturer.office = Office.Text;
-            actionForm.discplineList[lastElement].lecturer.NameLec = NamePrepod.Text;
+            int lastElement = actionForm.discplineList.Count - 1;
+            actionForm.discplineList.Last().lecturer = new Lecturer(
+                Departsment.Text,
+                NamePrepod.Text,
+                int.Parse(Office.Text)
+                );           
 
             this.Hide();
             actionForm.Show();

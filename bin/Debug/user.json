@@ -1,1 +1,1 @@
-[{"lecturer":{"departament":"Кафедра ИСиТ","NameLec":"q","office":"2"},"name":"q","course":"2","semester":"1","specialty":"ПОИТ","controlType":"Зачёт","numLectures":1,"numLab":1}]
+[{"lecturer":{"departament":"Кафедра ИСиТ","nameLecturer":"Плющ А.В.","office":59},"name":"математика","course":1,"semester":1,"specialty":"ПОИТ","controlType":"Зачёт","numLectures":12,"numLab":12}]

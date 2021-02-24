@@ -46,6 +46,7 @@ namespace OOP_SEM3_L2
             this.label6 = new System.Windows.Forms.Label();
             this.NumLab = new System.Windows.Forms.TextBox();
             this.OkButton = new System.Windows.Forms.Button();
+            this.DisciplineMessage = new System.Windows.Forms.RichTextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -244,11 +245,21 @@ namespace OOP_SEM3_L2
             this.OkButton.UseVisualStyleBackColor = true;
             this.OkButton.Click += new System.EventHandler(this.OkButton_Click);
             // 
+            // DisciplineMessage
+            // 
+            this.DisciplineMessage.Location = new System.Drawing.Point(356, 59);
+            this.DisciplineMessage.Name = "DisciplineMessage";
+            this.DisciplineMessage.ReadOnly = true;
+            this.DisciplineMessage.Size = new System.Drawing.Size(333, 415);
+            this.DisciplineMessage.TabIndex = 30;
+            this.DisciplineMessage.Text = "";
+            // 
             // Discipline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 571);
+            this.ClientSize = new System.Drawing.Size(738, 571);
+            this.Controls.Add(this.DisciplineMessage);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.NumLab);
@@ -294,5 +305,6 @@ namespace OOP_SEM3_L2
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox NumLab;
         private System.Windows.Forms.Button OkButton;
+        private System.Windows.Forms.RichTextBox DisciplineMessage;
     }
 }

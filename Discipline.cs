@@ -9,14 +9,29 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace OOP_SEM3_L2
 {
     public partial class Discipline : Form
     {
-        private DisLecturer disLecturer;       
+        private DisLecturer disLecturer;
         public DisciplineInfo discipline;
         public ActionForm actionForm;
+
+        private bool Validate(DisciplineInfo discipline) {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(discipline);
+            if (!Validator.TryValidateObject(discipline, context, results, true))
+            {
+                foreach(var error in results)
+                    DisciplineMessage.Text += error.ErrorMessage + "\r\n";
+
+                return false;
+            }
+
+            return true;
+        }
 
 
         public Discipline()
@@ -27,7 +42,6 @@ namespace OOP_SEM3_L2
         public Discipline(ActionForm actionForm)
         {
             InitializeComponent();
-            discipline = new DisciplineInfo();
             disLecturer = new DisLecturer(actionForm);
             this.actionForm = actionForm;
         }
@@ -37,18 +51,30 @@ namespace OOP_SEM3_L2
 
         }
         private void OkButton_Click(object sender, EventArgs e)
-        {                        
-            discipline.name = NameDis.Text;
-            discipline.course = Course.Text;
-            discipline.semester = FirstSemestr.Checked ? FirstSemestr.Text : SecondSemestr.Text;
-            discipline.specialty = Spec.Text;
-            discipline.controlType = Credit.Checked ? Credit.Text : Exam.Text;
-            discipline.numLab = Convert.ToInt32(NumLab.Text);
-            discipline.numLectures = Convert.ToInt32(NumLec.Text);
-            actionForm.discplineList.Add(discipline);
+        {
+            discipline = new DisciplineInfo(
+                NameDis.Text,
+                int.Parse(Course.Text),
+                int.Parse(FirstSemestr.Checked ? FirstSemestr.Text : SecondSemestr.Text),
+                Spec.Text,
+                Credit.Checked ? Credit.Text : Exam.Text,
+                int.Parse(NumLec.Text),
+                int.Parse(NumLab.Text)
+                );
 
-            this.Hide();
-            disLecturer.Show();
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(discipline);
+            if (!Validator.TryValidateObject(discipline, context, results, true))
+            {
+                foreach (var error in results)
+                    DisciplineMessage.Text += error.ErrorMessage + "\r\n";
+            }
+            else
+            {
+                actionForm.discplineList.Add(discipline);
+                this.Hide();
+                disLecturer.Show();
+            }
         }
 
         public bool EnterOnlyDigit(object sender, KeyPressEventArgs e)

@@ -8,19 +8,21 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using OOP_4SEM_3;
 
 namespace OOP_SEM3_L2
 {    
     public partial class ActionForm : Form
     {
-        public List<DisciplineInfo> discplineList = new List<DisciplineInfo>();
+        public List<DisciplineInfo> discplineList;
         private Discipline discipline;
 
         public ActionForm()
         {
             InitializeComponent();
             discipline = new Discipline(this);
+            discplineList = new List<DisciplineInfo>();
         }
         
         private void Form1_Load(object sender, EventArgs e)
@@ -33,8 +35,7 @@ namespace OOP_SEM3_L2
             this.Hide();
             discipline.Show();
         }
-
-        
+                
         private void ListDiscipline_SelectedIndexChanged(object sender, EventArgs e)
         {
             OutNameDis.Text = "";
@@ -51,7 +52,7 @@ namespace OOP_SEM3_L2
                 OutNameDis.Text += Convert.ToString("Тип контроля: " + DeJson[j].controlType + "\r\n");
                 OutNameDis.Text += Convert.ToString("Количество лаб: " + DeJson[j].numLab + "\r\n");
                 OutNameDis.Text += Convert.ToString("Количество лекций: " + DeJson[j].numLectures + "\r\n");
-                OutNameDis.Text += Convert.ToString("Имя лектора: " + DeJson[j].lecturer.NameLec + "\r\n");
+                OutNameDis.Text += Convert.ToString("Имя лектора: " + DeJson[j].lecturer.nameLecturer + "\r\n");
                 OutNameDis.Text += Convert.ToString("Кафедра: " + DeJson[j].lecturer.departament + "\r\n");
                 OutNameDis.Text += Convert.ToString("кабинет: " + DeJson[j].lecturer.office + "\r\n");
                 OutNameDis.Text += "-------------------------" + "\r\n";
@@ -82,9 +83,9 @@ namespace OOP_SEM3_L2
             OutFindInf.Text = "";
             for (int i = 0; i < Lenth; i++)
             {
-                if (discplineList[i].lecturer.NameLec == strFindedLector)
+                if (discplineList[i].lecturer.nameLecturer.ToString() == strFindedLector)
                 {
-                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.NameLec + "\r\n" +
+                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.nameLecturer + "\r\n" +
                         "Каьинет-" + discplineList[i].lecturer.office + "\r\n" +
                         "Каыкдра-" + discplineList[i].lecturer.departament +
                         "----------" + "\r\n";
@@ -102,9 +103,9 @@ namespace OOP_SEM3_L2
             OutFindInf.Text = "";
             for (int i = 0; i < Lenth; i++)
             {
-                if (discplineList[i].semester == strFindedCourse)
+                if (discplineList[i].semester.ToString() == strFindedCourse)
                 {
-                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.NameLec + "\r\n" +
+                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.nameLecturer + "\r\n" +
                         "Название дисциплины-" + discplineList[i].name + "\r\n" +
                         "----------" + "\r\n";
                 }
@@ -121,9 +122,9 @@ namespace OOP_SEM3_L2
             OutFindInf.Text = "";
             for (int i = 0; i < Lenth; i++)
             {
-                if (discplineList[i].course == strFindedCourse)
+                if (discplineList[i].course.ToString() == strFindedCourse)
                 {
-                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.NameLec + "\r\n" +
+                    OutFindInf.Text += "Имя лектора-" + discplineList[i].lecturer.nameLecturer + "\r\n" +
                         "Название дисциплины-" + discplineList[i].name + "\r\n" +
                         "----------" + "\r\n";
                 }
@@ -144,7 +145,7 @@ namespace OOP_SEM3_L2
                 OutFindInf.Text += Convert.ToString("Тип контроля: " + discplineList[j].controlType + "\r\n");
                 OutFindInf.Text += Convert.ToString("Количество лаб: " + discplineList[j].numLab + "\r\n");
                 OutFindInf.Text += Convert.ToString("Количество лекций: " + discplineList[j].numLectures + "\r\n");
-                OutFindInf.Text += Convert.ToString("Имя лектора: " + discplineList[j].lecturer.NameLec + "\r\n");
+                OutFindInf.Text += Convert.ToString("Имя лектора: " + discplineList[j].lecturer.nameLecturer + "\r\n");
                 OutFindInf.Text += Convert.ToString("Кафедра: " + discplineList[j].lecturer.departament + "\r\n");
                 OutFindInf.Text += Convert.ToString("кабинет: " + discplineList[j].lecturer.office + "\r\n");
                 OutFindInf.Text += "-------------------------" + "\r\n";
@@ -188,19 +189,85 @@ namespace OOP_SEM3_L2
 
     public class Lecturer
     {
-        public string departament;
-        public string NameLec;
-        public string office;
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"[а-я, ]+", ErrorMessage = "недопустимое название кафедры")]
+        public string departament { get; set; }
+
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"[А-Я,а-я, ,.]", ErrorMessage = "недопустимое название лекции")]
+        public string nameLecturer { get; set; }
+
+        [Required]
+        [Range(1, 100, ErrorMessage = "недопустимый/не указаный номер аудитория")]
+        public int office { get; set; }
+
+        public Lecturer(string departament, string nameLecturer, int office)
+        {
+            this.departament = departament;
+            this.nameLecturer = nameLecturer;
+            this.office = office;
+        }
+
+        public Lecturer()
+        {
+            this.departament = "";
+            this.nameLecturer = "";
+            this.office = 1;
+        }
     }
     public class DisciplineInfo
     {
-        public Lecturer lecturer = new Lecturer();
-        public string name;
-        public string course;
-        public string semester;
-        public string specialty;
-        public string controlType;
-        public int numLectures;
-        public int numLab;
+        [Required]
+        public Lecturer lecturer;
+
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"[А-Я,а-я, ]+", ErrorMessage = "недопустимое имя дисциплины")]
+        public string name { get; set; }
+
+        [Required]
+        [Range(1, 4, ErrorMessage = "недопустимое значение курса")]
+        public int course { get; set; }
+
+        [Required]
+        [Range(1, 2, ErrorMessage = "недопустимое значение семестра")]
+        public int semester { get; set; }
+
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"[А-Я]+", ErrorMessage = "недопустимое имя специальности")]
+        public string specialty { get; set; }
+
+        [Required]
+        [RegularExpression(@"(Зачёт|Экзамен)", ErrorMessage = "недопустимое имя специальности")]
+        public string controlType { get; set; }
+
+        [Required]
+        [Range(1, 30, ErrorMessage = "недопустимое количество лекций")]
+        public int numLectures { get; set; }
+
+        [Required]
+        [Range(1, 15, ErrorMessage = "недопустимое количество лабораторных")]
+        public int numLab { get; set; }
+
+        public DisciplineInfo(string name, int course, int semester, string specialty, string controlTyp, int numLectures, int numLab)
+        {
+            this.name = name;
+            this.course = course;
+            this.semester = semester;
+            this.specialty = specialty;
+            this.controlType = controlTyp;
+            this.numLectures = numLectures;
+            this.numLab = numLab;
+        }
+
+        public DisciplineInfo()
+        {
+            this.name = "";
+            this.course = 1;
+            this.semester = 1;
+            this.specialty = "";
+            this.controlType = "з";
+            this.numLectures = 1;
+            this.numLab = 1;
+        }
     }
 }
